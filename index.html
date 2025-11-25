@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>الكَهْف — إدارة المحل</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">
+      <div class="logo">الكَهْف</div>
+      <div class="slogan">نظام إدارة المحل</div>
+    </div>
+
+    <nav class="nav-links">
+      <a onclick="openPage('dashboard')">لوحة التحكم</a>
+      <a onclick="openPage('ps')">البلايستيشن</a>
+      <a onclick="openPage('bil')">البلياردو</a>
+      <a onclick="openPage('tennis')">التنس</a>
+      <a onclick="openPage('products')">المنتجات</a>
+      <a onclick="openPage('admin')">الإدارة</a>
+    </nav>
+
+    <div class="navbar-timer" id="navbar-timer">
+      <div class="timer-label">لا توجد جلسة نشطة</div>
+      <div class="timer-value" id="navbar-timer-value">00:00:00</div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Dashboard -->
+    <section id="dashboard" class="page active">
+      <h1 class="gold">لوحة التحكم</h1>
+      <div class="dashboard-grid">
+        <div class="card">
+          <h3>إحصائيات سريعة</h3>
+          <p id="stat-rooms">الغرف: 0</p>
+          <p id="stat-products">المنتجات: 0</p>
+        </div>
+        <div class="card">
+          <h3>نشاطات حديثة</h3>
+          <div id="activity-log"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PS -->
+    <section id="ps" class="page">
+      <h1 class="gold">البلايستيشن</h1>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <button class="gaming-btn" onclick="addRoomWithMode('ps')">+ إضافة جهاز</button>
+      </div>
+      <div id="ps-rooms" class="rooms"></div>
+    </section>
+
+    <!-- Billiard -->
+    <section id="bil" class="page">
+      <h1 class="gold">البلياردو</h1>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <button class="gaming-btn" onclick="addRoomWithMode('bil')">+ إضافة ترابيزة</button>
+      </div>
+      <div id="bil-rooms" class="rooms"></div>
+    </section>
+
+    <!-- Tennis -->
+    <section id="tennis" class="page">
+      <h1 class="gold">التنس</h1>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <button class="gaming-btn" onclick="addRoomWithMode('tennis')">+ إضافة طاولة</button>
+      </div>
+      <div id="tennis-rooms" class="rooms"></div>
+    </section>
+
+    <!-- Products -->
+    <section id="products" class="page">
+      <h1 class="gold">المنتجات</h1>
+
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+        <select id="sell-to-room-select">
+          <option value="">بيع مستقل</option>
+        </select>
+        <input id="prod-qty" type="number" min="1" value="1" style="width:80px" />
+        <button class="gaming-btn" onclick="sellSelectedProduct()">بيع / إضافة للغرفة</button>
+      </div>
+
+      <div id="products-list" class="cards-grid"></div>
+
+      <div class="product-actions">
+        <input id="new-prod-name" placeholder="اسم المنتج">
+        <input id="new-prod-price" placeholder="السعر" type="number">
+        <button class="gaming-btn" onclick="createProduct()">إضافة منتج</button>
+      </div>
+    </section>
+
+    <!-- Admin -->
+    <section id="admin" class="page">
+      <h1 class="gold">الإدارة</h1>
+      <div class="admin-grid">
+        <div class="card">
+          <h3>الأسعار حسب الوضع</h3>
+
+          <label>بلايستيشن — سعر للماتش</label>
+          <input id="price-ps-match" type="number">
+
+          <label>بلايستيشن — سعر للوقت</label>
+          <input id="price-ps-hour" type="number">
+
+          <hr>
+
+          <label>بلياردو — Pool</label>
+          <input id="price-bil-pool" type="number">
+
+          <label>بلياردو — Snooker</label>
+          <input id="price-bil-snooker" type="number">
+
+          <label>بلياردو — ثنائي</label>
+          <input id="price-bil-double" type="number">
+
+          <hr>
+
+          <label>تنس — فردي</label>
+          <input id="price-tennis-single" type="number">
+
+          <label>تنس — ثنائي</label>
+          <input id="price-tennis-double" type="number">
+
+          <div style="margin-top:8px"><button class="gaming-btn" onclick="savePrices()">حفظ الأسعار</button></div>
+
+          <hr>
+          <h4>Appletimer (تطبيق سريع على غرفة)</h4>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select id="appletimer-room-select"></select>
+            <button class="gaming-btn" onclick="appletimerApply(30)">30</button>
+            <button class="gaming-btn" onclick="appletimerApply(60)">60</button>
+            <button class="gaming-btn" onclick="appletimerApply(0)">وقت مفتوح</button>
+          </div>
+
+        </div>
+
+        <div class="card">
+          <h3>الغرف الحالية</h3>
+          <div id="admin-rooms"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">© الكَهْف</footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
